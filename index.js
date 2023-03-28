@@ -37,7 +37,7 @@ app.get('/secret-4', (req, res) => {
 })
 app.get('/secret-5', (req, res) => {
     const { code } = req.query;
-    if (check(code)) {
+    if (check(userPassword, JSON.parse(code))) {
         res.send('Secret Message!')
     } else {
         res.send('Unauthorised')
