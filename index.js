@@ -1,9 +1,14 @@
 const express = require('express')
 const { decrypt, encrypt, check } = require('./cryptography')
 const app = express()
+const cors = require("cors");
 const port = 3000
 const userID = 1
-const userPassword = 'sec123'
+const userPassword = 'sec123';
+app.use(cors({
+    origin: 'http://localhost:3001',
+    credentials: true, // <= Accept credentials (cookies) sent by the client
+}));
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -43,6 +48,16 @@ app.get('/secret-5', (req, res) => {
         res.send('Unauthorised')
     }
 })
+app.get('/secret-6', (req, res) => {
+    const code  = req.header('Authorization');
+    const iv  = req.header('IV');
+    if (check(userPassword, {code, iv})) {
+        res.send('Secret Message!')
+    } else {
+        res.send('Unauthorised')
+    }
+})
+
 app.get('/login', (req, res) => {
     const { password} = req.query;
     if (password === userPassword) {
