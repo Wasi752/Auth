@@ -8,7 +8,7 @@ const officerID = 777;
 const adminID = 7777;
 const userPassword = 'sec123';
 const officerPassword = 'sec1234';
-const adminPassword = 'sec1235';
+const adminPassword = 'sec12345';
 
 app.use(cors({
     origin: 'http://localhost:3001',
@@ -87,7 +87,9 @@ app.get('/secret-8', (req, res) => {
 app.get('/secret-9', (req, res) => {
     const code = req.header('Authorization');
     const iv = req.header('IV');
-    if (check(officerID, officerPassword, { code, iv }) || check(adminID, adminPassword, { code, iv })) {
+    if (check(userID, userPassword, { code, iv })
+        || check(officerID, officerPassword, { code, iv })
+        || check(adminID, adminPassword, { code, iv })) {
         res.send('Secret Message!')
     } else {
         res.send('Unauthorised')
@@ -114,6 +116,17 @@ app.get('/login-3', (req, res) => {
     const { id, password } = req.query;
     const IDNum = parseInt(id);
     if ((IDNum === userID || IDNum === officerID || IDNum === adminID) && password === userPassword) {
+        res.send(encrypt(IDNum, password))
+    } else {
+        res.send('Unauthorised')
+    }
+})
+app.get('/login-4', (req, res) => {
+    const { id, password } = req.query;
+    const IDNum = parseInt(id);
+    if ((IDNum === userID && password === userPassword)
+        || (IDNum === officerID && password === officerPassword)
+        || (IDNum === adminID && password === adminPassword)) {
         res.send(encrypt(IDNum, password))
     } else {
         res.send('Unauthorised')
