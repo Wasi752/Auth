@@ -5,9 +5,9 @@ const key = crypto.randomBytes(32);
 const iv = crypto.randomBytes(16);
 
 //Encrypting text
-function encrypt(id, password) {
+function encrypt(id, type) {
     let cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
-    let encrypted = cipher.update(id + ":" + password + ":" + getCurrentDate());
+    let encrypted = cipher.update(id + ":" + type + ":" + getCurrentDate());
     encrypted = Buffer.concat([encrypted, cipher.final()]);
     return { iv: iv.toString('hex'), code: encrypted.toString('hex') };
 }
@@ -25,11 +25,11 @@ function getCurrentDate() {
     const today = new Date();
     return today.getFullYear() + '.' + today.getMonth() + '.' + today.getDate();
 }
-function check(user, password, code) {
+function check(userType, code) {
     try {
         const decrypted = decrypt(code)
-        const [id, pass, date] = decrypted.split(':')
-        return parseInt(id) === user && pass === password && date === getCurrentDate();
+        const [_, type, date] = decrypted.split(':')
+        return type === userType && date === getCurrentDate();
         // if (parseInt(id) === user && pass === password && parseInt(date) === getCurrentDate()) {
         //     return true;
         // } else {
