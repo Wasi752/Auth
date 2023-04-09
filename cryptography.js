@@ -29,7 +29,7 @@ function check(user, password, code) {
     try {
         const decrypted = decrypt(code)
         const [id, pass, date] = decrypted.split(':')
-        return parseInt(id) === user && pass === password && parseInt(date) === getCurrentDate();
+        return parseInt(id) === user && pass === password && date === getCurrentDate();
         // if (parseInt(id) === user && pass === password && parseInt(date) === getCurrentDate()) {
         //     return true;
         // } else {
