@@ -1,0 +1,40 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "Nasir",
+            "password": "alif123",
+            "role": "ADMIN"
+        },
+        {
+            "id": 2,
+            "username": "Nayeem",
+            "password": "alif1234",
+            "role": "OFFICER"
+        },
+        {
+            "id": 3,
+            "username": "Amir",
+            "password": "alif1235",
+            "role": "OFFICER"
+        },
+        {
+            "id": 4,
+            "username": "Khalid",
+            "password": "alif1236",
+            "role": "USER"
+        },
+        {
+            "id": 5,
+            "username": "Basim",
+            "password": "alif1237",
+            "role": "USER"
+        },
+        {
+            "id": 6,
+            "username": "Basit",
+            "password": "alif12378",
+            "role": "USER"
+        }
+    ]
+}

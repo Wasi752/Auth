@@ -4,6 +4,19 @@ const algorithm = 'aes-256-cbc'; //Using AES encryption
 const key = crypto.randomBytes(32);
 const iv = crypto.randomBytes(16);
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+function encrypt_oneway(password){
+    bcrypt.hash(password, saltRounds, function(err, encryptedPassword) {
+        // Store hash in your password DB.
+    });
+}
+function compare(password, encryptedPassword){
+    // Load hash from your password DB.
+bcrypt.compare(password, encryptedPassword, function(err, result) {
+    // result == true
+});
+}
 //Encrypting text
 function encrypt(id, type) {
     let cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
@@ -30,11 +43,6 @@ function check(userType, code) {
         const decrypted = decrypt(code)
         const [_, type, date] = decrypted.split(':')
         return type === userType && date === getCurrentDate();
-        // if (parseInt(id) === user && pass === password && parseInt(date) === getCurrentDate()) {
-        //     return true;
-        // } else {
-        //     return false;
-        // }
     } catch (e) {
         return false;
     }
